@@ -1,0 +1,6 @@
+[package]
+name = "des-rust"
+version = "0.1.0"
+authors = ["Ilya Petukhov <iproha94@gmail.com>"]
+
+[dependencies]
