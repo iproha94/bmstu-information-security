@@ -2,9 +2,9 @@ var fs = require('fs');
 var enigma = require('./enigma'); 
 
 var maxLengthFile = 100;
-var nameSourceFile = 'data/source_file.txt';
-var nameCipherFile = "data/cipher_file.txt";
-var namePlainFile = "data/plain_file.txt";
+var nameSourceFile = '../data/source_file.txt';
+var nameCipherFile = "../data/cipher_file.txt";
+var namePlainFile = "../data/plain_file.txt";
 
 function arrToBuffer(arr, num) {
 	var buffer = new Buffer(num);

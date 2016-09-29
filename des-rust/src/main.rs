@@ -70,10 +70,10 @@ fn main() {
 	// end_permutation(&mut b1);
 	// b1.print();
 
-	let fr = File::open("data/source_file.txt").expect("Unable to open file");
+	let fr = File::open("../data/source_file.txt").expect("Unable to open file");
 	let mut reader = BufReader::new(fr);
 
-	let fw = File::create("data/chipher_file.txt").expect("Unable to create file");
+	let fw = File::create("../data/chipher_file.txt").expect("Unable to create file");
 	let mut writer = BufWriter::new(&fw);
 
 	for elem in reader.fill_buf() {
