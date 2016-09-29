@@ -1,3 +1,6 @@
+use std::fs::File;
+use std::io::{Read, Write, SeekFrom,BufReader, Seek, BufRead,BufWriter};
+
 struct Block {
 	data : i64,
 }
@@ -14,14 +17,14 @@ fn initial_permutation(block: &mut Block) {
 }
 
 fn end_permutation(block: &mut Block) {
-	let	table_1: [usize; 64] = [
+	let	table_8: [usize; 64] = [
 		40, 8, 48, 16, 56, 24, 64, 32, 39, 7, 47, 15, 55, 23, 63, 31,
 		38, 6, 46, 14, 54, 22, 62, 30, 37, 5, 45, 13, 53, 21, 61, 29,
 		36, 4, 44, 12, 52, 20, 60, 28, 35, 3, 43, 11, 51, 19, 59, 27,
 		34, 2, 42, 10, 50, 18, 58, 26, 33, 1, 41, 9, 49, 17, 57, 25
 	];
 
-	block.permutation(&table_1);
+	block.permutation(&table_8);
 }
 
 
@@ -59,18 +62,23 @@ impl Block {
 
 
 fn main() {
-	let a: i64 = 777_778;
+	// let a: i64 = 777_778;
+	// let	mut b1 = Block::new(a);
+	// b1.print();
+	// initial_permutation(&mut b1);
+	// b1.print();
+	// end_permutation(&mut b1);
+	// b1.print();
 
-	let	mut b1 = Block::new(a);
+	let fr = File::open("data/source_file.txt").expect("Unable to open file");
+	let mut reader = BufReader::new(fr);
 
-	b1.print();
-	
-	initial_permutation(&mut b1);
+	let fw = File::create("data/chipher_file.txt").expect("Unable to create file");
+	let mut writer = BufWriter::new(&fw);
 
-	b1.print();
-
-	end_permutation(&mut b1);
-
-	b1.print();
-
+	for elem in reader.fill_buf() {
+		print!("{:?}", elem);
+		
+		writer.write(elem).unwrap();
+	}
 }
