@@ -29,6 +29,27 @@ char table_8[] = {
 	34, 2, 42, 10, 50, 18, 58, 26, 33, 1, 41, 9, 49, 17, 57, 25
 };
 
+size_t SIZE_TABLE_2 = 48;
+char table_2[] = {
+	32, 1, 2, 3, 4, 5,
+	4, 5, 6, 7, 8, 9,
+	8, 9, 10, 11, 12, 13,
+	12, 13, 14, 15, 16, 17,
+	16, 17, 18, 19, 20, 21,
+	20, 21, 22, 23, 24, 25,
+	24, 25, 26, 27, 28, 29,
+	28, 29, 30, 31, 32, 1
+};
+
+size_t SIZE_TABLE_6 = 16;
+char table_6[] = {
+	1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1
+};
+
+size_t SIZE_TABLE_9 = 16;
+char table_9[] = {
+	0
+};
 
 size_t SIZE_TABLE_5 = 28;
 char table_5_C[] = {
@@ -48,6 +69,76 @@ char table_7[] = {
 	51, 45, 33, 48, 44, 49, 39, 56, 34, 53, 46, 42, 50, 36, 29, 32
 };
 
+size_t SIZE_TABLE_4 = 32;
+char table_4[] = {
+	16, 7, 20, 21, 29, 12, 28, 17,
+	1, 15, 23, 26, 5, 18, 31, 10,
+	2, 8, 24, 14, 32, 27, 3, 9,
+	19, 13, 30, 6, 22, 11, 4, 25
+};
+
+#define SIZE_TABLE_3_I1 8
+#define SIZE_TABLE_3_I2 4
+#define SIZE_TABLE_3_I3 16
+
+char table_3[SIZE_TABLE_3_I1][SIZE_TABLE_3_I2][SIZE_TABLE_3_I3] = {
+	{
+		{14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7},
+		{0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8},
+		{4, 1, 14, 8, 13, 6, 2, 11, 15, 12, 9, 7, 3, 10, 5, 0},
+		{15, 12, 8, 2, 4, 9, 1, 7, 5, 11, 3, 14, 10, 0, 6, 13}
+	},
+
+	{	
+		{15, 1, 8, 14, 6, 11, 3, 4, 9, 7, 2, 13, 12, 0, 5, 10},
+		{3, 13, 4, 7, 15, 2, 8, 14, 12, 0, 1, 10, 6, 9, 11, 5},
+		{0, 14, 7, 11, 10, 4, 13, 1, 5, 8, 12, 6, 9, 3, 2, 15},
+		{13, 8, 10, 1, 3, 15, 4, 2, 11, 6, 7, 12, 0, 5, 14, 9}	
+	},
+
+	{
+		{10, 0, 9, 14, 6, 3, 15, 5, 1, 13, 12, 7, 11, 4, 2, 8},	
+		{13, 7, 0, 9, 3, 4, 6, 10, 2, 8, 5, 14, 12, 11, 15, 1},
+		{13, 6, 4, 9, 8, 15, 3, 0, 11, 1, 2, 12, 5, 10, 14, 7}, 
+		{1, 10, 13, 0, 6, 9, 8, 7, 4, 15, 14, 3, 11, 5, 2, 12}	
+	},
+
+	{
+		{7, 13, 14, 3, 0, 6, 9, 10, 1, 2, 8, 5, 11, 12, 4, 15}, 
+		{13, 8, 11, 5, 6, 15, 0, 3, 4, 7, 2, 12, 1, 10, 14, 9}, 
+		{10, 6, 9, 0, 12, 11, 7, 13, 15, 1, 3, 14, 5, 2, 8, 4}, 
+		{3, 15, 0, 6, 10, 1, 13, 8, 9, 4, 5, 11, 12, 7, 2, 14} 
+	},
+
+	{
+		{2, 12, 4, 1, 7, 10, 11, 6, 8, 5, 3, 15, 13, 0, 14, 9}, 
+		{14, 11, 2, 12, 4, 7, 13, 1, 5, 0, 15, 10, 3, 9, 8, 6}, 
+		{4, 2, 1, 11, 10, 13, 7, 8, 15, 9, 12, 5, 6, 3, 0, 14}, 
+		{11, 8, 12, 7, 1, 14, 2, 13, 6, 15, 0, 9, 10, 4, 5, 3}	
+	},
+
+	{	
+		{12, 1, 10, 15, 9, 2, 6, 8, 0, 13, 3, 4, 14, 7, 5, 11}, 
+		{10, 15, 4, 2, 7, 12, 9, 5, 6, 1, 13, 14, 0, 11, 3, 8}, 
+		{9, 14, 15, 5, 2, 8, 12, 3, 7, 0, 4, 10, 1, 13, 11, 6}, 
+		{4, 3, 2, 12, 9, 5, 15, 10, 11, 14, 1, 7, 6, 0, 8, 13}	
+	},
+
+	{	
+		{4, 11, 2, 14, 15, 0, 8, 13, 3, 12, 9, 7, 5, 10, 6, 1}, 
+		{13, 0, 11, 7, 4, 9, 1, 10, 14, 3, 5, 12, 2, 15, 8, 6}, 
+		{1, 4, 11, 13, 12, 3, 7, 14, 10, 15, 6, 8, 0, 5, 9, 2}, 
+		{6, 11, 13, 8, 1, 4, 10, 7, 9, 5, 0, 15, 14, 2, 3, 12}	
+	},
+
+	{	
+		{13, 2, 8, 4, 6, 15, 11, 1, 10, 9, 3, 14, 5, 0, 12, 7}, 
+		{1, 15, 13, 8, 10, 3, 7, 4, 12, 5, 6, 11, 0, 14, 9, 2}, 
+		{7, 11, 4, 1, 9, 12, 14, 2, 0, 6, 10, 13, 15, 3, 5, 8}, 
+		{2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11}	
+	}
+};
+
 long permutation_bit(long data, char i_from, char i_to) {
 	return (data >> (i_from - 1) & 1) << i_to;
 }
@@ -62,16 +153,48 @@ long permutation(long data, char* table, size_t size_table) {
 	return b;
 }
 
-long feistel(int a, long k) {
+long feistel(long a, long k) {
+	//k - 48бит 
+	//48бит
+	a = permutation(a, table_2, SIZE_TABLE_2);
 
-	return k;
+	a ^= k;
+
+	long result = 0;
+
+	int num_b_block = 8;
+	int bit_in_block = 6;
+	long b;
+
+	for (int i = 0; i < num_b_block; ++i) {
+		long temp = a;
+		int right = sizeof(long) * 8 - bit_in_block * (i + 1);
+
+		//обнуляем левую часть
+		temp <<= right;
+		temp >>= right;
+
+		b = temp >> (i * bit_in_block); 
+
+		long ia = b & 0x20;
+		ia >>= 4;
+		ia |= (b & 0x1);
+
+		long ib = b & 0x1F;
+		ib >>= 1;
+
+		b = table_3[i][ia][ib];
+
+		result |= b << ((num_b_block - i - 1) * 4);
+	}
+
+
+	return permutation(result, table_4, SIZE_TABLE_4);
 }
 
 long _enciphering(long block, long k[NUM_KEYS]) {
 	long left_i = block >> 32 ;
-	long right_i = block & 0x00000000FFFFFFFF;
-
-	// printf("%ld, %ld, %ld \n", block, left_i, right_i);
+	long right_i = block & 0x0FFFFFFFF;
 
 	long left_i1;
 	long right_i1;
@@ -82,16 +205,11 @@ long _enciphering(long block, long k[NUM_KEYS]) {
 
 		right_i = right_i1;
 		left_i = left_i1;
-
-		// printf("%ld, %ld \n", left_i, right_i);
-
 	}
 
 	block = 0;
 	block |= left_i1 << 32;
 	block |= right_i1;
-
-	// printf("%ld\n", block);
 
 	return block;
 }
@@ -110,18 +228,22 @@ void enciphering(long k[NUM_KEYS]) {
 	}
 
 	long temp;
-	while (fread(&temp, sizeof(long), 1, f_source) == 1) {
+	int num;
+	while ((num = fread(&temp, sizeof(char), 8, f_source)) == 8) {
 		temp = permutation(temp, table_1, SIZE_TABLE);
 		temp = _enciphering(temp, k);
 		temp = permutation(temp, table_8, SIZE_TABLE);
 
 		fwrite(&temp, sizeof(long), 1, f_cipher);
 	}
-	temp = permutation(temp, table_1, SIZE_TABLE);
-	temp = _enciphering(temp, k);
-	temp = permutation(temp, table_8, SIZE_TABLE);
 
-	fwrite(&temp, sizeof(long), 1, f_cipher);
+	if (num) {
+		temp = permutation(temp, table_1, SIZE_TABLE);
+		temp = _enciphering(temp, k);
+		temp = permutation(temp, table_8, SIZE_TABLE);
+		fwrite(&temp, sizeof(long), 1, f_cipher);
+	}
+
 
 	long size_file = ftell(f_source);
 	fwrite(&size_file, sizeof(long), 1, f_cipher);
@@ -132,7 +254,7 @@ void enciphering(long k[NUM_KEYS]) {
 
 long _deciphering(long block, long k[NUM_KEYS]) {
 	long left_i = block >> 32 ;
-	long right_i = block & 0x00000000FFFFFFFF;
+	long right_i = block & 0x0FFFFFFFF;
 
 	long left_i_1;
 	long right_i_1;
@@ -165,7 +287,6 @@ long deciphering(long k[NUM_KEYS]) {
     	exit(1);
 	}
 
-	// fread(&num_end_block, sizeof(long), 1, f_cipher);
 	long temp;
 	long end_temp;
 	while (fread(&temp, sizeof(long), 1, f_cipher) == 1) {
@@ -207,6 +328,41 @@ void trunc_cipher_file(long end_temp) {
 	fclose(f_plain2);
 }
 
+long cicle_shift(long k) {
+	long bit56 = k & 0x80000000000000;
+	bit56 >>= 55;
+	k <<= 1;
+	k &= 0xFFFFFFFFFFFFFF;
+	k |= bit56;
+
+	return k;
+}
+
+void getArrKeys(long key, long *k) {
+	//по 28 бит
+	long c_i;
+	long d_i;
+
+	c_i = permutation(key, table_5_C, SIZE_TABLE_5) << 28;
+	d_i = permutation(key, table_5_D, SIZE_TABLE_5);
+
+	//56 бит
+	long k_i = 0;
+	k_i |= d_i;
+	k_i |= c_i;
+
+
+	for (int i = 0; i < 16; ++i) {
+		//todo сдвинуть cidi
+
+		for (int j = 0; j < table_6[i]; ++j) {
+			k_i = cicle_shift(k_i);
+		}
+		
+		k[i] = permutation(k_i, table_7, SIZE_TABLE_7);
+	}
+}
+
 int main() {
 	srand(time(NULL));
 
@@ -222,37 +378,17 @@ int main() {
     	exit(1);
 	}
 
-	long key = *"abcdefgh";
-
-	//по 28 бит
-	long c_i;
-	long d_i;
-
-	c_i = permutation(key, table_5_C, SIZE_TABLE_5) << 28;
-	d_i = permutation(key, table_5_D, SIZE_TABLE_5);
-
 	//по 48 бит 
-	long k[NUM_KEYS];
+	long k[NUM_KEYS]; 
 
-	for (int i = 0; i < 16; ++i) {
-		//56 бит
-		long k_i = 0;
+	long key;
 
-		//todo сдвинуть cidi
-		
-		k_i |= d_i;
-		k_i |= c_i;
-
-		k[i] = 0;
-		k[i] = permutation(k_i, table_7, SIZE_TABLE_7);
-	}
-
-	//todo убрать
-	for (int i = 0; i < 16; ++i) {
-		k[i] = rand();
-	}
+	key = 0xFF00FF00EF00FF00;
+	getArrKeys(key, k);
 
 	enciphering(k);
+
+
 	long end = deciphering(k);
 	trunc_cipher_file(end);
 
