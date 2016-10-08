@@ -5,7 +5,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-char *SOURCE_FILE = "../data/source_file.txt";
+char *SOURCE_FILE = "../data/source_file.txt.zip";
 char *CIPHER_FILE = "../data/cipher_file.txt";
 char *PLAIN_FILE_TEMP = "../data/plain_file_temp.txt";
 char *PLAIN_FILE = "../data/plain_file.txt";

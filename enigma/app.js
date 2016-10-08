@@ -1,10 +1,10 @@
 var fs = require('fs');
 var enigma = require('./enigma'); 
 
-var maxLengthFile = 100;
-var nameSourceFile = '../data/source_file.txt';
-var nameCipherFile = "../data/cipher_file.txt";
-var namePlainFile = "../data/plain_file.txt";
+var maxLengthFile = 1000;
+var nameSourceFile = '../data/source_file';
+var nameCipherFile = "../data/cipher_file";
+var namePlainFile = "../data/plain_file";
 
 function arrToBuffer(arr, num) {
 	var buffer = new Buffer(num);
@@ -45,7 +45,5 @@ fs.open(nameSourceFile, 'r', function(status, fd) {
 
             console.log("The file-plain was saved!");
         }); 
-
-
     });
 });
