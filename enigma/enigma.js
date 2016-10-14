@@ -1,6 +1,6 @@
 var config = require('./config'); 
  
-var random = require('../jslib/random'); 
+var random = require('../jslib/Random'); 
 
 function createRotor() {
 	var rotor = {};

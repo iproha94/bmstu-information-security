@@ -1,19 +1,25 @@
-var random = require('../jslib/random'); 
+var Random = require('../jslib/Random'); 
+var MyMath = require('../jslib/MyMath'); 
+var Prime = require('../jslib/Prime'); 
+var config = require('./config'); 
 
-function getPrimeNumber() {
-	let arr = [23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131];
+var MIN_FI = config.minFi;
+var MIN_PRIME = config.minPrime;
+var MAX_PRIME = config.maxPrime;
 
-	let i = random.randFromZeroToMax(arr.length);
-	return arr[i];
-} 
 
 function getE(fi) {
-	let num = 17;
+	let num = Random.randFromMinToMax(MIN_FI, fi);
 
-	if (num < fi) return num;
+	while (MyMath.getNod(num, fi) != 1) 
+		num = Random.randFromMinToMax(MIN_FI, fi);
+
+	return num;
 } 
 
-function getD(a, b, n) {
+function getX(a, b) {
+	// ax + by = 1
+	
 	let E = [[1,	0], 
 			 [0,	1]];
 
@@ -38,33 +44,24 @@ function getD(a, b, n) {
 	return E[0][1];
 }
 
-function normD(d, n, fi) {
+function getD(d, n, fi) {
 	let kMax = Math.floor((n - d) / fi);
 	let kMin = Math.floor((fi - d) / fi);
 
-	return d + random.randFromMinToMax(kMax, kMin) * fi;
+	return d + Random.randFromMinToMax(kMax, kMin) * fi;
 }
 
 
 function getKey() {
-	let p = getPrimeNumber();
-	let q = getPrimeNumber();
-
-	// console.log("p =", p);
-	// console.log("q =", q);
+	let p = Prime.getPrimeNumber(MIN_PRIME, MAX_PRIME);
+	let q = Prime.getPrimeNumber(MIN_PRIME, MAX_PRIME);
 
 	let n = p * q;
 	let fi = (p - 1) * (q - 1);
 
-	// console.log("n =", n);
-	// console.log("fi =", fi);
-
 	let e = getE(fi);
-	let d = getD(e, fi);
-	d = normD(d, n, fi);
-
-	// console.log("e =", e);
-	// console.log("d =", d);
+	let d = getX(e, fi);
+	d = getD(d, n, fi);
 
 	return {
 		private: {
@@ -78,20 +75,10 @@ function getKey() {
 	}
 } 
 
+
 function translateBlock(m, key) {
-	let r = 1;
-	let k = key.k;
-	let n = key.n;
-
-	while (k > 0) {
-		if (k % 2) r = (r * m) % n;
-		
-		m *= m;
-		m %= n;
-		k >>= 1;
-	}
-
-	return r;
+	return MyMath.exponentiationModulo(m, key.k, key.n);
+	
 }
 
 function translate(text, key) {
@@ -105,3 +92,4 @@ function translate(text, key) {
 
 module.exports.getKey = getKey;
 module.exports.translate = translate;
+
