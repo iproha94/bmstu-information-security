@@ -1,7 +1,7 @@
 var Random = require('../jslib/Random'); 
 var MyMath = require('../jslib/MyMath'); 
 var Prime = require('../jslib/Prime'); 
-var config = require('./config'); 
+var config = require('./rsa-config'); 
 
 var MIN_FI = config.minFi;
 var MIN_PRIME = config.minPrime;

@@ -1,10 +1,6 @@
 var fs = require('fs');
 var rsa = require('./rsa');
-
-var maxLengthFile = 1000;
-var nameSourceFile = '../data/source_file';
-var nameCipherFile = "../data/cipher_file";
-var namePlainFile = "../data/plain_file";
+var config = require('./app-config');
 
 function arrToBuffer(arr, num) {
 	var buffer = new Buffer(num);
@@ -15,14 +11,14 @@ function arrToBuffer(arr, num) {
 	return buffer;
 }
 
-fs.open(nameSourceFile, 'r', function(status, fd) {
+fs.open(config.nameSourceFile, 'r', function(status, fd) {
     if (status) {
         console.log(status.message);
         return;
     }
 
-    var buffer = new Buffer(maxLengthFile);
-    fs.read(fd, buffer, 0, maxLengthFile, 0, function(err, num) {
+    var buffer = new Buffer(config.maxLengthFile);
+    fs.read(fd, buffer, 0, config.maxLengthFile, 0, function(err, num) {
 
     	let key = rsa.getKey();
     	console.log(key);
@@ -30,7 +26,7 @@ fs.open(nameSourceFile, 'r', function(status, fd) {
     	var cipherFile = rsa.translate(buffer, key.public);
     	buffer = arrToBuffer(cipherFile, num);
         
-        fs.writeFile(nameCipherFile, buffer, function(err) {
+        fs.writeFile(config.nameCipherFile, buffer, function(err) {
             if(err) {
                 return console.log(err);
             }
@@ -41,7 +37,7 @@ fs.open(nameSourceFile, 'r', function(status, fd) {
         var plainFile = rsa.translate(cipherFile, key.private)
     	buffer = arrToBuffer(plainFile, num);
 
-        fs.writeFile(namePlainFile, buffer, function(err) {
+        fs.writeFile(config.namePlainFile, buffer, function(err) {
             if(err) {
                 return console.log(err);
             }
