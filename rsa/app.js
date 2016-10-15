@@ -11,6 +11,16 @@ function arrToBuffer(arr, num) {
 	return buffer;
 }
 
+function bufferTwoByteToOneByte(arr, num) {
+    var buffer = new Buffer(2 * num);
+    for (var i = 0; i < 2 * num; i+=2) {
+        buffer[i] = arr[i] && 0xFF;
+        buffer[i + 1] = (arr[i] && 0xFF00) >> 8;
+    }
+
+    return buffer;
+}
+
 fs.open(config.nameSourceFile, 'r', function(status, fd) {
     if (status) {
         console.log(status.message);
@@ -19,13 +29,13 @@ fs.open(config.nameSourceFile, 'r', function(status, fd) {
 
     var buffer = new Buffer(config.maxLengthFile);
     fs.read(fd, buffer, 0, config.maxLengthFile, 0, function(err, num) {
-
     	let key = rsa.getKey();
     	console.log(key);
 
     	var cipherFile = rsa.translate(buffer, key.public);
-    	buffer = arrToBuffer(cipherFile, num);
-        
+
+        //пишем в файл (он станет в 2 раза больше)
+        buffer = bufferTwoByteToOneByte(cipherFile, num);
         fs.writeFile(config.nameCipherFile, buffer, function(err) {
             if(err) {
                 return console.log(err);
