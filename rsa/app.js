@@ -34,7 +34,7 @@ fs.open(config.nameSourceFile, 'r', function(status, fd) {
 
     	var cipherFile = rsa.translate(buffer, key.public);
 
-        //пишем в файл (он станет в 2 раза больше)
+        //пишем в файл (он станет больше)
         buffer = bufferTwoByteToOneByte(cipherFile, num);
         fs.writeFile(config.nameCipherFile, buffer, function(err) {
             if(err) {

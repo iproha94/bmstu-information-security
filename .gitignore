@@ -2,4 +2,5 @@ target
 Cargo.lock
 data
 *.out
-
+.idea
+out
