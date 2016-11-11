@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,30 +8,25 @@ import java.util.List;
 public class Main {
 
 
-    public static void main(String[] args) {
-        List<Integer> in = new ArrayList();
-        in.add((int) 'g');
-        in.add((int) 'o');
-        in.add((int) 'i');
-        in.add((int) 'n');
-        in.add((int) 'g');
-        in.add((int) 'g');
-        in.add((int) 'o');
-        in.add((int) 'i');
-        in.add((int) 'n');
-        in.add((int) 'g');
-        in.add((int) 'g');
-        in.add((int) 'o');
-        in.add((int) 'n');
-        in.add((int) 'e');
+    public static void main(String[] args) throws IOException {
+        String addressSource = "../data/source_file";
 
-        System.out.println(in);
+        List<Integer> in = ConvertFile.readUnByteFile(addressSource);
 
         LZW lzw = new LZW();
 
-        List<Integer> zip = lzw.compress(in);
+        List<Integer> compress = lzw.compress(in);
 
-        System.out.println(zip);
+        String addressCompress = "../data/compress_file";
+        ConvertFile.writeIntFile(addressCompress, compress);
 
+
+        //----------------
+        List<Integer> inCompress = ConvertFile.readIntFile(addressCompress);
+
+        List<Integer> decompress = lzw.decompress(inCompress);
+
+        String addressDecompress = "../data/decompress_file";
+        ConvertFile.writeByteFile(addressDecompress, decompress);
     }
 }

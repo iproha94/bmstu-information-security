@@ -6,20 +6,22 @@ import java.util.List;
  */
 public class LZW {
     private static final int R = 256;        // number of input chars
-    private static final int L = 4096;       // number of codewords = 2^W
-    private static final int W = 12;         // codeword width
 
-
-    public List<Integer> compress(List<Integer> in) {
-        List<ElementOfTable> table = new ArrayList();
-
+    public static final void initTable(List<List<Integer>> table) {
         for (int i = 0; i < R; ++i) {
             List<Integer> string = new ArrayList();
             string.add(i);
 
-            ElementOfTable element = new ElementOfTable(string, -1);
-            table.add(element);
+            table.add(string);
         }
+    }
+
+    public List<Integer> compress(List<Integer> in) {
+        List<List<Integer>> table = new ArrayList();
+
+        initTable(table);
+
+        List<Integer> out = new ArrayList();
 
         List<Integer> string = new ArrayList();
         string.add(in.get(0));
@@ -28,43 +30,52 @@ public class LZW {
             List stringPlusSymbol = new ArrayList(string);
             stringPlusSymbol.add(in.get(i));
 
-            if (getCodeByString(stringPlusSymbol, table) != -1) {
+            if (table.indexOf(stringPlusSymbol) != -1) {
                 string = stringPlusSymbol;
             } else {
-                ElementOfTable element = new ElementOfTable(stringPlusSymbol, getCodeByString(string, table));
-                table.add(element);
+                out.add(table.indexOf(string));
+                table.add(stringPlusSymbol);
 
                 string = new ArrayList();
                 string.add(in.get(i));
             }
         }
 
-        ElementOfTable element = new ElementOfTable(null, getCodeByString(string, table));
-        table.add(element);
+        out.add(table.indexOf(string));
 
+        return out;
+    }
+
+    public List<Integer> decompress(List<Integer> in) {
+        List<List<Integer>> table = new ArrayList();
+
+        initTable(table);
 
         List<Integer> out = new ArrayList();
 
-        for (ElementOfTable el: table) {
-            if (el.out != -1) {
-                out.add(el.out);
+        int oldCode = in.get(0);
+        out.add(oldCode);
+
+        for (int i = 1; i < in.size(); ++i) {
+            int newCode = in.get(i);
+            List<Integer> string = table.get(newCode);
+
+            for (int j = string.size() - 1; j >= 0; --j ) {
+                out.add(string.get(j));
             }
+
+            int symbol = string.get(string.size() - 1);
+
+            List<Integer> oldCodePlusSymbol = new ArrayList<>();
+            oldCodePlusSymbol.add(symbol);
+            oldCodePlusSymbol.add(oldCode);
+
+            table.add(oldCodePlusSymbol);
+
+            oldCode = newCode;
         }
 
         return out;
     }
 
-    private int getCodeByString(List stringPlusSymbol, List<ElementOfTable> table) {
-        for (int i = 0; i < table.size(); ++i) {
-            if (stringPlusSymbol.equals(table.get(i).element)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static void main(String[] args) {
-
-    }
 }
