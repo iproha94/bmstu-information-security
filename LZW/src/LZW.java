@@ -5,7 +5,9 @@ import java.util.List;
  * Created by ilyaps on 11.11.16.
  */
 public class LZW {
-    private static final int R = 256;        // number of input chars
+    private static final int R = 256;
+    private static final int ClearCode = 256;
+    private static final int CodeEndOfInformation = 257;
 
     public static final void initTable(List<List<Integer>> table) {
         for (int i = 0; i < R; ++i) {
@@ -13,6 +15,12 @@ public class LZW {
             string.add(i);
 
             table.add(string);
+        }
+    }
+
+    private void writeString(List<Integer> string, List<Integer> out) {
+        for (int i = 0; i < string.size(); ++i ) {
+            out.add(string.get(i));
         }
     }
 
@@ -28,7 +36,7 @@ public class LZW {
 
         for (int i = 1; i < in.size(); ++i) {
             List stringPlusSymbol = new ArrayList(string);
-            stringPlusSymbol.add(in.get(i));
+            stringPlusSymbol.add(0, in.get(i));
 
             if (table.indexOf(stringPlusSymbol) != -1) {
                 string = stringPlusSymbol;
@@ -55,20 +63,27 @@ public class LZW {
 
         int oldCode = in.get(0);
         out.add(oldCode);
+        int symbol = oldCode;
 
         for (int i = 1; i < in.size(); ++i) {
             int newCode = in.get(i);
-            List<Integer> string = table.get(newCode);
 
-            for (int j = string.size() - 1; j >= 0; --j ) {
-                out.add(string.get(j));
+            List<Integer> string;
+
+            if (table.size() > newCode) {
+                string = table.get(newCode);
+            } else {
+                string = new ArrayList<>(table.get(oldCode));
+                string.add(symbol);
             }
 
-            int symbol = string.get(string.size() - 1);
+            writeString(string, out);
+
+            symbol = string.get(0);
 
             List<Integer> oldCodePlusSymbol = new ArrayList<>();
+            writeString(table.get(oldCode), oldCodePlusSymbol);
             oldCodePlusSymbol.add(symbol);
-            oldCodePlusSymbol.add(oldCode);
 
             table.add(oldCodePlusSymbol);
 
@@ -78,4 +93,7 @@ public class LZW {
         return out;
     }
 
+    public static void main(String[] args) {
+
+    }
 }
