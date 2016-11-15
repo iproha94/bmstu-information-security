@@ -1,30 +1,33 @@
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
 
-    public static void main(String[] args) throws IOException {
-        String addressSource = "../data/app.js";
-
-        List<Integer> in = ConvertFile.readUnByteFile(addressSource);
-
-//        System.out.println(in);
-
+    public static void main(String[] args) throws Exception {
         LZW lzw = new LZW();
+
+        String addressSource = "../data/bmstu-logo.png";
+        List<Integer> in = ConvertFile.readUnByteFile(addressSource);
+//        System.out.println(in);
 
         List<Integer> compress = lzw.compress(in);
 //        System.out.println(compress);
+        int max = compress.get(0);
+        for(int el : compress) {
+            if (el > max) {
+                max = el;
+            }
+        }
+        System.out.println("Max = " + max);
+
 
         String addressCompress = "../data/compress_file";
-        ConvertFile.writeIntFile(addressCompress, compress);
-
+        ConvertFile.writeMyTypeFile(addressCompress, compress);
 
         //----------------
-        List<Integer> inCompress = ConvertFile.readIntFile(addressCompress);
+        List<Integer> inCompress = ConvertFile.readMyTypeFile(addressCompress);
 //        System.out.println(inCompress);
-
 
         List<Integer> decompress = lzw.decompress(inCompress);
 //        System.out.println(decompress);

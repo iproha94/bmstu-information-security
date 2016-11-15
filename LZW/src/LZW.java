@@ -6,8 +6,6 @@ import java.util.List;
  */
 public class LZW {
     private static final int R = 256;
-    private static final int ClearCode = 256;
-    private static final int CodeEndOfInformation = 257;
 
     public static final void initTable(List<List<Integer>> table) {
         for (int i = 0; i < R; ++i) {
