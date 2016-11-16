@@ -9,7 +9,7 @@ public class Main {
 
         LZW lzw = new LZW(startLengthOutBlock);
 
-        String addressSource = "../data/source_file.zip";
+        String addressSource = "../data/source_file.txt";
         List<Integer> in = IOFile.readUnByteFile(addressSource);
 //        System.out.println(in);
 

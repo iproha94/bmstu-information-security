@@ -6,28 +6,30 @@ import java.util.List;
  * Created by ilyaps on 11.11.16.
  */
 public class LZW {
-    private int startLengthOutBlock = 8;
+    private int startLengthOutBlock;
 
     public LZW(int startLengthOutBlock) {
         this.startLengthOutBlock = startLengthOutBlock;
     }
 
-    private void initTable(List<List<Integer>> table) {
+    private List<List<Integer>> initTable() {
+        List<List<Integer>> table = new ArrayList();
+
         for (int i = 0; i < Math.pow(2, startLengthOutBlock); ++i) {
             List<Integer> string = new ArrayList();
             string.add(i);
 
             table.add(string);
         }
+
+        return table;
     }
 
     public BitSet compress(List<Integer> in) {
         int startPos = 0;
         int lengthBlock = startLengthOutBlock;
 
-        List<List<Integer>> table = new ArrayList();
-
-        initTable(table);
+        List<List<Integer>> table = initTable();
 
         BitSet bs = new BitSet();
 
@@ -43,6 +45,7 @@ public class LZW {
             } else {
                 if (table.size() >= Math.pow(2, lengthBlock)) {
                     ++lengthBlock;
+                    System.out.println("compress: lengthBlock up to " + lengthBlock);
                 }
 
                 startPos = IOBitSet.writeToBitSet(table.indexOf(string), bs, lengthBlock, startPos);
@@ -66,9 +69,7 @@ public class LZW {
         int startPos = 0;
         int lengthBlock = startLengthOutBlock + 1;
 
-        List<List<Integer>> table = new ArrayList();
-
-        initTable(table);
+        List<List<Integer>> table = initTable();
 
         List<Integer> out = new ArrayList();
 
@@ -79,8 +80,6 @@ public class LZW {
         int symbol = oldCode;
 
         while (startPos < bs.length()) {
-
-
             int newCode = IOBitSet.readFromBitSet(bs, startPos, lengthBlock);
             startPos += lengthBlock;
 
@@ -104,6 +103,7 @@ public class LZW {
             table.add(oldCodePlusSymbol);
             if (table.size() + 1 >= Math.pow(2, lengthBlock)) {
                 ++lengthBlock;
+                System.out.println("decompress: lengthBlock up to " + lengthBlock);
             }
 
             oldCode = newCode;
