@@ -6,11 +6,14 @@ import java.util.List;
  * Created by ilyaps on 11.11.16.
  */
 public class LZW {
-    private static final int R = 256;
-    public static final int START_LENGTH_OUT_BLOCK = 9;
+    private int startLengthOutBlock = 8;
 
-    public static final void initTable(List<List<Integer>> table) {
-        for (int i = 0; i < R; ++i) {
+    public LZW(int startLengthOutBlock) {
+        this.startLengthOutBlock = startLengthOutBlock;
+    }
+
+    private void initTable(List<List<Integer>> table) {
+        for (int i = 0; i < Math.pow(2, startLengthOutBlock); ++i) {
             List<Integer> string = new ArrayList();
             string.add(i);
 
@@ -20,13 +23,13 @@ public class LZW {
 
     public BitSet compress(List<Integer> in) {
         int startPos = 0;
-        int lengthBlock = START_LENGTH_OUT_BLOCK;
+        int lengthBlock = startLengthOutBlock;
 
         List<List<Integer>> table = new ArrayList();
 
         initTable(table);
 
-        BitSet out = new BitSet();
+        BitSet bs = new BitSet();
 
         List<Integer> string = new ArrayList();
         string.add(in.get(0));
@@ -38,28 +41,30 @@ public class LZW {
             if (table.indexOf(stringPlusSymbol) != -1) {
                 string = stringPlusSymbol;
             } else {
-                startPos = IOBitSet.writeToBitSet(table.indexOf(string), out, lengthBlock, startPos);
-
-                table.add(stringPlusSymbol);
                 if (table.size() >= Math.pow(2, lengthBlock)) {
                     ++lengthBlock;
                 }
+
+                startPos = IOBitSet.writeToBitSet(table.indexOf(string), bs, lengthBlock, startPos);
+
+                table.add(stringPlusSymbol);
+
 
                 string = new ArrayList();
                 string.add(in.get(i));
             }
         }
 
-        IOBitSet.writeToBitSet(table.indexOf(string), out, lengthBlock, startPos);
+        IOBitSet.writeToBitSet(table.indexOf(string), bs, lengthBlock, startPos);
 
-        return out;
+        return bs;
     }
 
 
 
     public List<Integer> decompress(BitSet bs) {
         int startPos = 0;
-        int lengthBlock = START_LENGTH_OUT_BLOCK;
+        int lengthBlock = startLengthOutBlock + 1;
 
         List<List<Integer>> table = new ArrayList();
 
@@ -73,8 +78,9 @@ public class LZW {
         out.add(oldCode);
         int symbol = oldCode;
 
-
         while (startPos < bs.length()) {
+
+
             int newCode = IOBitSet.readFromBitSet(bs, startPos, lengthBlock);
             startPos += lengthBlock;
 
@@ -94,8 +100,9 @@ public class LZW {
             List<Integer> oldCodePlusSymbol = new ArrayList<>(table.get(oldCode));
             oldCodePlusSymbol.add(symbol);
 
+
             table.add(oldCodePlusSymbol);
-            if (table.size() >= Math.pow(2, lengthBlock)) {
+            if (table.size() + 1 >= Math.pow(2, lengthBlock)) {
                 ++lengthBlock;
             }
 
