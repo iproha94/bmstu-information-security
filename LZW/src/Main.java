@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
@@ -6,12 +7,12 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         int startLengthOutBlock = 8;
+        int resetLengthOutBlock = 12;
 
-        LZW lzw = new LZW(startLengthOutBlock);
+        LZW lzw = new LZW(startLengthOutBlock, resetLengthOutBlock);
 
         String addressSource = "../data/source_file.txt";
         List<Integer> in = IOFile.readUnByteFile(addressSource);
-//        System.out.println(in);
 
         BitSet compress = lzw.compress(in);
 //        System.out.println(compress);

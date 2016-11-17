@@ -7,9 +7,11 @@ import java.util.List;
  */
 public class LZW {
     private int startLengthOutBlock;
+    private int resetLengthOutBlock;
 
-    public LZW(int startLengthOutBlock) {
+    public LZW(int startLengthOutBlock, int resetLengthOutBlock) {
         this.startLengthOutBlock = startLengthOutBlock;
+        this.resetLengthOutBlock = resetLengthOutBlock;
     }
 
     private List<List<Integer>> initTable() {
@@ -37,21 +39,28 @@ public class LZW {
         string.add(in.get(0));
 
         for (int i = 1; i < in.size(); ++i) {
+            if (table.size() >= Math.pow(2, lengthBlock)) {
+                ++lengthBlock;
+                System.out.println("compress: lengthBlock up to " + lengthBlock);
+
+                if (lengthBlock == resetLengthOutBlock) {
+                    table = initTable();
+                    lengthBlock = startLengthOutBlock;
+
+                    --i;
+                    continue;
+                }
+            }
+
             List stringPlusSymbol = new ArrayList(string);
             stringPlusSymbol.add(0, in.get(i));
 
             if (table.indexOf(stringPlusSymbol) != -1) {
                 string = stringPlusSymbol;
             } else {
-                if (table.size() >= Math.pow(2, lengthBlock)) {
-                    ++lengthBlock;
-                    System.out.println("compress: lengthBlock up to " + lengthBlock);
-                }
-
                 startPos = IOBitSet.writeToBitSet(table.indexOf(string), bs, lengthBlock, startPos);
 
                 table.add(stringPlusSymbol);
-
 
                 string = new ArrayList();
                 string.add(in.get(i));
@@ -62,8 +71,6 @@ public class LZW {
 
         return bs;
     }
-
-
 
     public List<Integer> decompress(BitSet bs) {
         int startPos = 0;
@@ -80,6 +87,24 @@ public class LZW {
         int symbol = oldCode;
 
         while (startPos < bs.length()) {
+            if (table.size() + 1 >=  Math.pow(2, lengthBlock)) {
+                ++lengthBlock;
+                System.out.println("decompress: lengthBlock up to " + lengthBlock);
+
+                if (lengthBlock == resetLengthOutBlock) {
+                    table = initTable();
+                    lengthBlock = startLengthOutBlock + 1;
+
+                    oldCode = IOBitSet.readFromBitSet(bs, startPos, lengthBlock);
+                    startPos += lengthBlock;
+
+                    out.add(oldCode);
+                    symbol = oldCode;
+
+                    continue;
+                }
+            }
+
             int newCode = IOBitSet.readFromBitSet(bs, startPos, lengthBlock);
             startPos += lengthBlock;
 
@@ -99,12 +124,7 @@ public class LZW {
             List<Integer> oldCodePlusSymbol = new ArrayList<>(table.get(oldCode));
             oldCodePlusSymbol.add(symbol);
 
-
             table.add(oldCodePlusSymbol);
-            if (table.size() + 1 >= Math.pow(2, lengthBlock)) {
-                ++lengthBlock;
-                System.out.println("decompress: lengthBlock up to " + lengthBlock);
-            }
 
             oldCode = newCode;
         }
