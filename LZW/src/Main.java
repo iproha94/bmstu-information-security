@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         int startLengthOutBlock = 8;
-        int resetLengthOutBlock = 12;
+        int resetLengthOutBlock = 11;
 
         LZW lzw = new LZW(startLengthOutBlock, resetLengthOutBlock);
 

@@ -41,7 +41,7 @@ public class LZW {
         for (int i = 1; i < in.size(); ++i) {
             if (table.size() >= Math.pow(2, lengthBlock)) {
                 ++lengthBlock;
-                System.out.println("compress: lengthBlock up to " + lengthBlock);
+//                System.out.println("compress: lengthBlock up to " + lengthBlock);
 
                 if (lengthBlock == resetLengthOutBlock) {
                     table = initTable();
@@ -89,7 +89,7 @@ public class LZW {
         while (startPos < bs.length()) {
             if (table.size() + 1 >=  Math.pow(2, lengthBlock)) {
                 ++lengthBlock;
-                System.out.println("decompress: lengthBlock up to " + lengthBlock);
+//                System.out.println("decompress: lengthBlock up to " + lengthBlock);
 
                 if (lengthBlock == resetLengthOutBlock) {
                     table = initTable();
